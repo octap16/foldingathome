@@ -1,5 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="team_appFlow" doc:id="753bde4b-b99f-44e6-8b18-8859ed8b5d03" >
+		<http:listener doc:name="Listener" doc:id="fc962f99-66a7-48d5-a1ed-4f05edb3dc6f" config-ref="HTTP_Listener_config" path="${http.teams}" allowedMethods="GET"/>
+		<flow-ref doc:name="generateSearchQueryParamsFlow" doc:id="e2e8318c-9db7-45b5-be4e-9e31083015d7" name="generateSearchQueryParamsFlow"/>
+		<db:select doc:name="Select" doc:id="ec9c6836-4056-45f8-844d-96cc46033d3a" config-ref="Database_Config">
+			<db:sql>#[&quot;SELECT  teams.id, teams.name, team_statistics.wu, team_statistics.score, team_statistics.rank, team_statistics.team_statistic_date  FROM folding_home_db.teams
+join team_statistics
+on teams.id = team_statistics.teams_id $(vars.searchByName) $(vars.searchByTeam)
+ORDER BY team_statistics.rank
+limit 100&quot;]</db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="55bb0d89-1a40-4bea-ac90-b09d6a67bcc1">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+fun description() =
+if(payload == []) "No results"
+else "Top 100"
+---
+{
+"description": description(),
+   "monthly": false,
+    "results": payload map(value, index) ->{
+    	"wus": value.wu,
+    	"name": value.name, 
+    	"rank": value.rank,
+    	"credit": value.score,
+    	"team": value.id 
+    },
+    "month": payload[0].team_statistic_date as Date{format: "yyyy-MM-dd"} as String{format: "M"} as Number default now().month,
+    "year": payload[0].team_statistic_date as Date{format: "yyyy-MM-dd"} as String{format: "yyyy"} as Number default now().year,
+    "query": "team",
+    "path": "teams",
+ }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="generateSearchQueryParamsFlow" doc:id="d0cc53c2-eb4d-4534-8dea-098ea521940a" >
+		<ee:transform doc:name="searchByName" doc:id="d9ad1efd-2cae-4983-92b4-e5c79c99ca11">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="searchByName"><![CDATA[%dw 2.0
+output aplication/java
+var search_type = attributes.queryParams.search_type default "="
+fun buildQuery() = 
+	if (attributes.queryParams.name == null) ""
+	else if (attributes.queryParams.search_type == "like") ("and teams.name " ++ search_type ++" " ++ "'%" ++ attributes.queryParams.name ++ "%'")
+	else if (attributes.queryParams.search_type == "prefix") ("and teams.name " ++ "like " ++ "'" ++ attributes.queryParams.name ++ "%'")
+	else ("and teams.name " ++ "= " ++ "'" ++ attributes.queryParams.name ++ "'")
+---
+buildQuery()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="5494a38c-c8fc-4ac1-a0ae-6359b641afdf" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="searchByTeam" ><![CDATA[%dw 2.0
+output aplication/java
+
+fun buildQuery() = 
+	if (attributes.queryParams.team == null) ""
+	else ("and  teams.id = " ++ attributes.queryParams.team)
+---
+buildQuery()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+</mule>
