@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="batch_inserting_to_donors_and_donor-staistics_tablesFlow" doc:id="1b76ea54-64ef-4459-86f7-f680c330cb9d" >
+		<logger level="INFO" doc:name="Logger" doc:id="79d69e2d-7d2b-4cab-9fdd-12f01646a83e" message="start inserting in #[now()]"/>
+		<batch:job jobName="batch_processing_to_donor_tablesBatch_Job" doc:id="6e8c68c7-0a04-42be-863b-d087e937f05b" maxFailedRecords="-1" blockSize="500">
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="bc668098-dbc4-4faa-b826-31822dd666ef" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="0d2a593a-16c7-4e8e-bd91-f3d70b4ee4eb" size="500">
+						<flow-ref doc:name="insert_to_donorsFlow" doc:id="89cbdc65-dfd8-4b0f-8f8f-7b869bce8bea" name="insert_to_donorsFlow" />
+					</batch:aggregator>
+				</batch:step>
+				<batch:step name="Batch_Step2" doc:id="5e3cfeee-6831-4c99-9122-5ffb211798a0" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="4a49e1db-4891-465b-86e1-e1098514f4e7" size="500">
+						<flow-ref doc:name="inser_to_donors_statistics_tableFlow" doc:id="0f116c59-1967-415c-a179-f68186ea8008" name="inser_to_donors_statistics_tableFlow" />
+					</batch:aggregator>
+				</batch:step>
+				<batch:step name="Batch_Step3" doc:id="357fc0e6-b4b5-445d-9e2f-8f6f54da696e" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="56006d33-8059-4a1b-88cf-8ab8b3adec54" size="500">
+						<flow-ref doc:name="insert_to_donors-teamsFlow" doc:id="4da004da-76f8-4b21-95fe-910b85d558e7" name="insert_to_donors-teamsFlow"/>
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+			<batch:on-complete >
+				<logger level="INFO" doc:name="Logger" doc:id="473bb8c6-b9a9-4d2c-8cab-36cf9a9fb6f9" message="end processing in #[now()]"/>
+			</batch:on-complete>
+		</batch:job>
+	</flow>
+	<flow name="batch_updating_to_donor_statistics_tablesFlow" doc:id="60457b5e-4ffc-4e25-954c-b235c64a4355" >
+		<batch:job jobName="batch_processing_to_donor_tablesBatch_Job1" doc:id="e146d3c8-de59-488f-86c9-65c4607bd440" blockSize="500" maxFailedRecords="-1">
+			<batch:process-records >
+				<batch:step name="Batch_Step1" doc:id="593b2439-44fe-4d5e-a268-e40bf365a1c4" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="c1698ff1-3bf4-4dd6-b0b4-7f1e8b5b5561" size="500">
+						<flow-ref doc:name="update_donor_statistics_tableFlow" doc:id="bae2e588-3a38-466a-ad68-e8f819f85832" name="update_donor_statistics_tableFlow"/>
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+		</batch:job>
+	</flow>
+	<flow name="batch_inserting_to_donor-statistics_tablesFlow" doc:id="4f3f087a-e6e2-499e-858e-72f0fe8f0d38" >
+		<batch:job jobName="batch_processing_to_donor_tablesBatch_Job2" doc:id="0bc3491c-ae04-4c4e-a651-15368344187b" maxFailedRecords="-1" blockSize="500">
+			<batch:process-records >
+				<batch:step name="Batch_Step1" doc:id="014711c0-22bd-4242-87ba-273c62ee1ca1" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="2736fafd-b52c-4b03-92ed-799e7720ce1d" size="500">
+						<flow-ref doc:name="inser_to_donors_statistics_tableFlow" doc:id="387fc922-9a4c-4118-85b1-585975e90fd3" name="inser_to_donors_statistics_tableFlow"/>
+					</batch:aggregator>
+				</batch:step>
+			</batch:process-records>
+		</batch:job>
+	</flow>
+</mule>

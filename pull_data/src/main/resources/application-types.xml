@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="json" format="json">
+      <types:shape format="weave" example="examples/Untitled-1.json"><![CDATA[%dw 2.0
+
+type json = {|
+  id: String, 
+  name: String, 
+  department: String
+|} {"example": "{\\\"id\\\":\\\"id\\\",\\\"name\\\":\\\"name\\\",\\\"department\\\":\\\"department\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="csv" format="csv">
+      <types:shape format="weave"><![CDATA[%dw 2.0
+
+type csv = Array<{|  id: String,   name: String,   department: String|}>
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#e14825bc-5623-4443-bed5-58888643ddc0"/>
+</types:mule>

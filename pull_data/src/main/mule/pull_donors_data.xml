@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<flow name="pull_donors_dataFlow" doc:id="18d75853-e19a-4493-9953-bb7621dd8e99" >
+		<http:listener doc:name="Listener" doc:id="65277478-8da7-45c9-b9c4-e00a9ae22f9c" path="${http.donor_pull_path}" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a7a8204b-2560-47d4-b67a-df8aad0b2a6b" message="start processing donor in #[now()]"/>
+		<http:request method="GET" doc:name="Request" doc:id="23b55408-69a9-4668-a4b1-a4c12f2c37dc" url="${request.donor_pull_path}" outputMimeType='application/csv; bodystartlinenumber=1; headerlinenumber=1; escape="\\"; streaming=true; header=false;separator="&#009;"'/>
+		<flow-ref doc:name="prepare_donor_payloadFlow" doc:id="44768783-2fa0-4454-819c-e8ca3dcc7bbf" name="prepare_donor_payloadFlow"/>
+		<flow-ref doc:name="retreive_from_donor_object_store" doc:id="46b78cf2-6f84-4653-a6e2-2719684a89d6" name="retreive_from_donor_object_store"/>
+		<flow-ref doc:name="set_data_to_donor_tables" doc:id="3a025e7a-e9ce-441a-b9f5-c3e98f379a1a" name="set_data_to_donor_tables"/>
+		<flow-ref doc:name="set_to_donor_object_store" doc:id="96c387a7-0fb5-4da6-adf8-92ada4305bda" name="set_to_donor_object_store"/>
+		<ee:transform doc:name="Transform Message" doc:id="881c32f7-d86c-40a2-8929-cbaeb085a33d">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	done:true
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="prepare_donor_payloadFlow" doc:id="011fc937-02e5-4f1f-bc5e-25eadf85f328" >
+		<ee:transform doc:name="donor_capacity" doc:id="67316c62-3be1-4aa7-8166-37d15c6dae7c">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="donor_capacity" ><![CDATA[%dw 2.0
+output application/json
+---
+sizeOf(payload) as Number default 0]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="header" doc:id="417c6b37-10c4-4dd7-94c8-7c5d599086b7">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="header"><![CDATA[%dw 2.0
+output application/json
+---
+payload[0]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="date" doc:id="8ba79e2b-feb2-422f-82fe-c76a78e32a21">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="date"><![CDATA[%dw 2.0
+output application/json
+//var bb= {
+//  "column_0": "Wed Jan 29 07:50:47 GMT 2020"
+//}
+// YYYY-MM-DD hh:mm:ss
+---
+vars.header[0] as Date {format : "E MMM d HH:mm:ss zz y"} as String {format: "yyyy-MM-dd"}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="filter_payload" doc:id="6492cb9d-2f0a-4cc6-8489-8a807d27bc0a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/csv
+---
+payload filter $$ > 1]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="csv to java" doc:id="40d57e1f-f700-4453-92dd-abfa2af9a4f1">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload map (value, index )->{
+	name: value.column_0 as String,
+	score: value.column_1 as Number default 0,
+	wu: value.column_2 as Number default 0,
+	team_id: value.column_3 as Number default 0,
+	donor_statistic_date: vars.date,
+	rank: index +1,
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="set_data_to_donor_tables" doc:id="86659d0d-d340-42f6-997f-a6450332d1d6">
+		<choice doc:name="Choice" doc:id="c5de1324-b774-4140-908d-509810d70b52">
+			<when expression="#[vars.current_donor_date == vars.date]">
+				<flow-ref doc:name="update_donor_statistics_tableFlow" doc:id="d82b33f1-4e7c-4e87-8dc6-de078469da29" name="update_donor_statistics_tableFlow" />
+			</when>
+			<otherwise>
+				<flow-ref doc:name="check_for_new_donor_item" doc:id="45609bef-56b4-4dcf-bfb0-ff3d2df034ff" name="check_for_new_donor_item" />
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="check_for_new_donor_item" doc:id="e4e4142c-9083-448e-89dc-5c1790c7fee9">
+		<choice doc:name="Choice" doc:id="9fd5a388-e1b2-4e28-960f-c8a805922e3b">
+			<when expression="#[vars.current_donor_capacity &lt; vars.donor_capacity]">
+				<flow-ref doc:name="batch_inserting_to_donors_and_donor-staistics_tablesFlow" doc:id="a87b9680-0515-4d0c-b674-683735be2046" name="batch_inserting_to_donors_and_donor-staistics_tablesFlow" />
+			</when>
+			<otherwise>
+				<flow-ref doc:name="batch_inserting_to_donors_and_donor-staistics_tablesFlow" doc:id="5a536e61-acb2-4bbf-b79e-2d2f26445b09" name="batch_inserting_to_donors_and_donor-staistics_tablesFlow" />
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="set_to_donor_object_store" doc:id="f5f4903a-f458-4e16-bda4-2e226518eb76" >
+		<os:store doc:name="set_current_capacity" doc:id="22750bcb-64f6-43e5-befc-99838a225f90" key="current_donor_capacity" objectStore="Object_store1" >
+			<os:value ><![CDATA[#[vars.donor_capacity as Number]]]></os:value>
+		</os:store>
+		<os:store doc:name="set_current_date" doc:id="1dd2491a-6077-4614-8c87-396a4c7215c9" key="current_donor_date" objectStore="Object_store1" >
+			<os:value ><![CDATA[#[vars.date as String]]]></os:value>
+		</os:store>
+	</flow>
+	<flow name="retreive_from_donor_object_store" doc:id="2493f5d7-862e-4d46-bff0-71d1709e6d77" >
+		<os:retrieve doc:name="get_current_capacity" doc:id="411d3ed5-4654-4b6a-8f1f-bc80f3ac4386" key="current_donor_capacity" objectStore="Object_store1" target="current_donor_capacity" >
+			<os:default-value ><![CDATA[#[0 as Number]]]></os:default-value>
+		</os:retrieve>
+		<os:retrieve doc:name="get_current_date" doc:id="16cd98ac-7574-4305-a8ac-86be4fb06cf9" key="current_donor_date" objectStore="Object_store1" target="current_donor_date" >
+			<os:default-value ><![CDATA[null]]></os:default-value>
+		</os:retrieve>
+	</flow>
+</mule>

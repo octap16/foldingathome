@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
+	
+		<flow name="update_team_statistic_table_flow" doc:id="984a8873-ef2e-47e7-89d0-393524ffdd86" >
+		<db:bulk-update doc:name="Bulk update statistic table" doc:id="131b4c56-d07e-4294-820c-512d0935c266" config-ref="Database_Config">
+			<db:sql>UPDATE team_statistics
+SET score = :score, wu=  :wu, team_statistics.rank = :rank
+WHERE team_statistic_date = :team_statistic_date
+AND teams_id = :teams_id;
+
+</db:sql>
+		</db:bulk-update>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="f9b5a250-99d6-404f-89c0-3bc42845ca88" >
+				<logger level="DEBUG" doc:name="Logger" doc:id="acd80f4a-8005-4bf4-8fa6-9d3a94c68401" message="#[error.description]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="insert_to_team_statistic_table_flow" doc:id="ca6f0a4a-a7a9-4629-b9de-8338167e83a2" >
+		<db:bulk-insert doc:name="Bulk insert to statistic table" doc:id="b43c9b01-0fe4-453c-8976-1c31364997b2" config-ref="Database_Config">
+			<db:sql>INSERT INTO team_statistics (teams_id, score, wu, team_statistic_date, team_statistics.rank)
+values(:teams_id, :score, :wu, :team_statistic_date, :rank)
+</db:sql>
+		</db:bulk-insert>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="ca08f41a-d1f3-4c58-b0d9-1fad9262f210" >
+				<logger level="DEBUG" doc:name="Logger" doc:id="7d4875da-14f9-4599-b5cd-f773781d565d" message="#[error.description]"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="insert_to_team_table_flow" doc:id="939b62c5-9a83-4532-a6a4-c677a483a259" >
+		<db:bulk-insert doc:name="Bulk insert to team table" doc:id="874c6860-e645-4c8d-b771-741b3fe9a223" target="teamReturn" config-ref="Database_Config">
+			<db:sql>INSERT INTO teams(id, name)
+values(:teams_id, :teamname)
+ON DUPLICATE KEY UPDATE
+id = :teams_id,
+name = :teamname;
+</db:sql>
+		</db:bulk-insert>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="e139b106-b713-41d0-bb83-ddf73fd3ac30" >
+				<logger level="DEBUG" doc:name="Logger" doc:id="4aea7d60-7f21-47e4-82fc-390eb3ac6993" message="#[error.description]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="inser_to_donors_statistics_tableFlow" doc:id="7c80754f-384e-420c-a2da-943dd16f2545" >
+		<db:bulk-insert doc:name="insert_to_donor_statistics_table " doc:id="9ccc9be3-2436-44ca-85c4-810c808f1588" config-ref="Database_Config">
+			<db:sql >INSERT INTO donor_statistics (score, wu, donor_statistic_date, donor_statistics.rank, donors_id)
+values (:score, :wu, :donor_statistic_date, :rank, (SELECT id FROM donors WHERE name = :name));
+</db:sql>
+		</db:bulk-insert>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="4cc9c2aa-4632-40b7-9d40-43b28bee78da" >
+				<logger level="DEBUG" doc:name="Logger" doc:id="1fbbe190-1e5a-48d0-8387-f0c221a2bbdf" message="#[error.description]"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="insert_to_donorsFlow" doc:id="e34a4537-c05e-48fd-9f6e-387b81b0eeec">
+		<db:bulk-insert doc:name="inser to donor_table" doc:id="530e3e01-f24e-4ab7-aa51-5cd97fc0e6cd" config-ref="Database_Config" >
+			<db:sql >INSERT INTO donors(name)
+values(:name)
+ON DUPLICATE KEY UPDATE
+name = :name;</db:sql>
+		</db:bulk-insert>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="472900e3-25e8-47f3-9fdc-dd430268b3be" >
+				<logger level="DEBUG" doc:name="Logger" doc:id="b21c9e74-dfb6-49a1-9ca7-f9a86e2ae0e2" message="#[error.description]"/>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="update_donor_statistics_tableFlow" doc:id="38d963ec-6053-48cc-9b81-975dd7ccdd83" >
+		<db:bulk-update doc:name="update_donor_statistics_table" doc:id="b3df8ba0-2979-4604-a4f6-55e53cc60e68" config-ref="Database_Config" >
+			<db:sql >UPDATE team_statistics
+SET score = :score, wu=  :wu, donor_statistics.rank = :rank
+WHERE donor_statistic_date = :donor_statistic_date
+AND donors_id = (SELECT id FROM donors WHERE name = :name );
+
+</db:sql>
+		</db:bulk-update>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="ed97be13-7577-4aa3-992f-af1ac4c028f9" >
+				<logger level="INFO" doc:name="Logger" doc:id="de6d2f2b-e6d8-424c-a45c-be366febe473" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="insert_to_donors-teamsFlow" doc:id="9010f87a-62fa-498d-9fd1-7cbdfd55e4e4" >
+		<db:bulk-insert doc:name="insert_to_donors_teams_table" doc:id="c7e286a2-a6d0-4789-a0d7-474b5857781f" config-ref="Database_Config">
+			<db:sql >INSERT INTO folding_home_db.donors_teams(donors_id, teams_id) 
+values((SELECT id FROM donors WHERE name = :name), :team_id)</db:sql>
+		</db:bulk-insert>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="3cf82461-a1a1-4f65-8bd1-459f917a4ee0" >
+				<logger level="INFO" doc:name="Logger" doc:id="d70be847-940c-4a7e-940e-63a7ea7ea4b8" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	
+</mule>

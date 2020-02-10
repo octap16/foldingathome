@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+	<flow name="process_team_dataFlow" doc:id="efa488da-9845-492c-963e-393c9aa61f89" >
+		<http:listener doc:name="GET/teams" doc:id="99ae41ef-b84f-498f-9d71-1a32a747f752" path="${http.team_pull_path}" config-ref="HTTP_Listener_config"/>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="701ab8fb-3b81-49fa-9969-7095f4c88eda" message="start processing team in #[now()]" />
+		<http:request method="GET" doc:name="pull team" doc:id="45e47283-d026-45cc-833f-930e57288e26" url="${request.team_pull_path}" outputMimeType='application/csv; bodystartlinenumber=1; headerlinenumber=1; header=false;separator="&#009;"' />
+		<flow-ref doc:name="prepare_team_payload_Flow" doc:id="e620d338-7aef-4258-8950-9d277c5e9efa" name="prepare_team_payload_Flow"/>
+		<flow-ref doc:name="retreive_from_object_store" doc:id="2217300e-680b-461b-bf66-97e0f3a9aa75" name="retreive_from_object_store" />
+		<flow-ref doc:name="set_data_to_team_tables" doc:id="65e11d1d-95f7-488d-8259-8ef3130f1346" name="set_data_to_team_tables" />
+		<flow-ref doc:name="set_to_object_store" doc:id="a70faa7b-bce0-4e63-b1ae-891469d46d64" name="set_to_object_store" />
+		<ee:transform doc:name="Transform Message" doc:id="f98d0e4e-d83a-4c40-b2a1-6521e76f8b8a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{"555":"666"}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="trigger_pull_donors_dataFlow" doc:id="44067a98-b626-46dc-9065-99e7d046ffc7" name="pull_donors_dataFlow"/>
+	</flow>
+	<flow name="prepare_team_payload_Flow" doc:id="09cb01a8-22bd-454a-a90f-816de05e71bf" >
+		<ee:transform doc:name="team_capacity" doc:id="1d61088d-4415-4f80-9e02-284c94a8eb0e" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="team_capacity" ><![CDATA[%dw 2.0
+output application/json
+---
+sizeOf(payload) as Number]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<validation:validate-size doc:name="Validate payload size" doc:id="82d10cef-2970-42a4-b358-7a2ac3d680cf" min="1" value="#[vars.team_capacity]"/>
+		<ee:transform doc:name="get_header" doc:id="875bd5f7-a805-47f7-a9f4-42f7871bfdca">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="header"><![CDATA[%dw 2.0
+output application/json 
+---
+payload[0]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="get_date" doc:id="94415112-392a-4846-aede-e0a240736aa4">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="date" ><![CDATA[%dw 2.0
+output application/json
+
+---
+vars.header[0] as Date {format : "E MMM d HH:mm:ss zz y"} as String {format: "yyyy-MM-dd"}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="filter_payload" doc:id="711c8294-4d54-4405-afaf-757ec54953f8">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/csv
+---
+payload filter $$ > 1]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="csv to java" doc:id="89fabc2f-b84f-4ad3-a37e-7f97c9bdac76">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+payload map{
+	teams_id: $.column_0 ,
+	teamname: $.column_1,
+	score: $.column_2 as Number default 0,
+	wu: $.column_3 as Number default 0,
+	rank: ($$ + 1) as String,
+	team_statistic_date: vars.date
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="set_data_to_team_tables" doc:id="58a041ed-85bb-4c6a-9a46-6cc7302342d2" >
+		<choice doc:name="Choice" doc:id="9b81decd-0c95-4881-b84d-c6249d7bee37">
+			<when expression="#[vars.current_date == vars.date]">
+				<flow-ref doc:name="batch_team_table_updateFlow" doc:id="745761e1-0a2c-45ab-913c-a4794ab76d26" name="batch_updating_to_team-statistic_tableFlow"/>
+			</when>
+			<otherwise>
+				<flow-ref doc:name="check_for_new_item" doc:id="50333c3b-b653-4f0c-b6c6-6346cb6993f8" name="check_for_new_item"/>
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="check_for_new_item" doc:id="38d0789a-8c88-4148-b941-b1242f5d3b37">
+		<choice doc:name="Choice" doc:id="df695600-aded-4815-a225-06cf528dcc80">
+			<when expression="#[vars.current_capacity != vars.team_capacity]">
+				<flow-ref doc:name="batch_inserting_to_team_and_team-statistics_tablesFlow" doc:id="a7f61ac3-a47a-4a2f-9153-53d84396b5c3" name="batch_inserting_to_team_and_team-statistics_tablesFlow" />
+			</when>
+			<otherwise>
+				<flow-ref doc:name="batch_inserting_to_team-statistics_tableFlow" doc:id="002ecafc-c92c-4b33-a735-f0c362310ee4" name="batch_inserting_to_team-statistics_tableFlow" />
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="set_to_object_store" doc:id="cb7e70dc-9814-464d-b4d2-55e6a088dc2b" >
+		<os:store doc:name="set_current_capacity" doc:id="de7f94ea-dbc2-4955-bed1-d43b016a3051" key="current_capacity" objectStore="Object_store1">
+			<os:value ><![CDATA[#[vars.team_capacity as Number]]]></os:value>
+		</os:store>
+		<os:store doc:name="set_current_date" doc:id="6d9b7bef-f06b-4ffa-906d-8326407ac0b9" key="current_date" objectStore="Object_store1">
+			<os:value><![CDATA[#[vars.date as String]]]></os:value>
+		</os:store>
+	</flow>
+	<flow name="retreive_from_object_store" doc:id="f101cb99-af9b-4fb8-b173-55f0b6c19ea1" >
+		<os:retrieve doc:name="get_current_capacity" doc:id="cdd83d2b-acc1-4099-a4b7-db08ad2a841d" key="current_capacity" target="current_capacity" objectStore="Object_store1">
+			<os:default-value ><![CDATA[#[0 as Number]]]></os:default-value>
+		</os:retrieve>
+		<os:retrieve doc:name="get_current_date" doc:id="bc12f1e7-ad69-4da4-b2c1-7e17c0cddc38" key="current_date" target="current_date" objectStore="Object_store1">
+			<os:default-value><![CDATA[null]]></os:default-value>
+		</os:retrieve>
+		<logger level="INFO" doc:name="Logger" doc:id="10b170ad-1cae-42b5-a607-87c0ab925adf" message="#[vars.current_date]"/>
+	</flow>
+
+</mule>
