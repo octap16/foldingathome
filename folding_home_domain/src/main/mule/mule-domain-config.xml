@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain:mule-domain
+        xmlns:os="http://www.mulesoft.org/schema/mule/os"
+        xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+        xmlns:db="http://www.mulesoft.org/schema/mule/db"
+        xmlns:http="http://www.mulesoft.org/schema/mule/http"
+        xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:domain="http://www.mulesoft.org/schema/mule/ee/domain" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+               http://www.mulesoft.org/schema/mule/ee/domain http://www.mulesoft.org/schema/mule/ee/domain/current/mule-domain-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="8aebe22a-7dfe-4387-811e-0f1fdc61da8a" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="440e38cf-f50a-4669-ad10-8de0b4e92ead" file="test-properties.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="32f4dc65-9238-4869-8b90-567c09dcedae" file="test-properties.yaml" key="?f#StFBt?s5crVXU" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="45e47283-d026-45cc-833f-930e57288e26" >
+		<db:my-sql-connection host="${db.host}" port="${db.port}" user="${db.user}" password="${secure::db.password}" database="${db.database}" >
+			<db:pooling-profile />
+		</db:my-sql-connection>
+	</db:config>
+	<http:request-config name="HTTP_Request_internal" doc:name="HTTP Request configuration" doc:id="9532cb7f-a2ab-4846-b1f4-fe632d241848" >
+		<http:request-connection host="${http.host}" port="${http.port}" />
+	</http:request-config>
+	<os:object-store name="Object_store1" doc:name="Object store" doc:id="c4ad4f11-d9fb-46a0-8a36-73937d94f3ca" />
+
+
+    <!-- configure here resource to be shared within the domain -->
+
+</domain:mule-domain>

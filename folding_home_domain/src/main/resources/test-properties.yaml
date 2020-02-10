@@ -1,0 +1,15 @@
+http:
+  port: "8080"
+  host: "localhost"
+  team_pull_path: "/teams"
+  donor_pull_path: "/donors"
+db:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "![TD+h5BldvH1uhguDy1dvbQ==]"
+  database: "folding_home_db"
+  
+request:
+  team_pull_path: "https://apps.foldingathome.org/daily_team_summary.txt"
+  donor_pull_path: "https://apps.foldingathome.org/daily_user_summary.txt"
