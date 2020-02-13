@@ -1,0 +1,58 @@
+{
+    "description": "Top 100",
+    "monthly": true,
+    "results": [
+        {
+            "wus": 1280688,
+            "name": "Curecoin",
+            "prev_rank": 1,
+            "rank": 1,
+            "credit": 89584229678,
+            "team": 224497
+        },
+        {
+            "wus": 591985,
+            "name": "folding@evga",
+            "prev_rank": 3,
+            "rank": 2,
+            "credit": 49000593033,
+            "team": 111065
+        },
+        {
+            "wus": 900074,
+            "name": "LinusTechTips_Team",
+            "prev_rank": 8,
+            "rank": 3,
+            "credit": 40589843086,
+            "team": 223518
+        },
+        {
+            "wus": 1040302,
+            "name": "www.banano.cc",
+            "prev_rank": 2,
+            "rank": 4,
+            "credit": 33003772595,
+            "team": 234980
+        },
+        {
+            "wus": 2527861,
+            "name": "Default (No team specified)",
+            "prev_rank": 4,
+            "rank": 5,
+            "credit": 32796391352,
+            "team": 0
+        },
+        {
+            "wus": 242350,
+            "name": "Hardware.no",
+            "prev_rank": 5,
+            "rank": 6,
+            "credit": 19149754719,
+            "team": 37651
+        }
+    ],
+    "month": 2,
+    "year": 2020,
+    "query": "team",
+    "path": "teams-monthly"
+}

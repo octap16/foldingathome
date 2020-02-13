@@ -1,0 +1,189 @@
+{
+    "wus": 100926551,
+    "donors": [
+        {
+            "wus": 68464210,
+            "name": "Anonymous",
+            "rank": 11,
+            "credit": 24038121244,
+            "team": 0,
+            "id": 1437
+        },
+        {
+            "wus": 164453,
+            "name": "RABishop",
+            "rank": 69,
+            "credit": 6460666151,
+            "team": 0,
+            "id": 20495
+        },
+        {
+            "wus": 103994,
+            "name": "nivedita",
+            "rank": 72,
+            "credit": 6148228626,
+            "team": 0,
+            "id": 18139
+        },
+        
+        {
+            "wus": 11650693,
+            "name": "PS3",
+            "rank": 167,
+            "credit": 2821031416,
+            "team": 0,
+            "id": 20172
+        },
+        {
+            "wus": 119454,
+            "name": "rel25917",
+            "rank": 210,
+            "credit": 2596085378,
+            "team": 0,
+            "id": 20963
+        },
+        {
+            "wus": 64744,
+            "name": "cnb",
+            "rank": 214,
+            "credit": 2553263588,
+            "team": 0,
+            "id": 99477
+        },
+        {
+            "wus": 99369,
+            "name": "Kencode",
+            "rank": 232,
+            "credit": 2403420717,
+            "team": 0,
+            "id": 13424
+        },
+        {
+            "wus": 228526,
+            "name": "Patrick_Lezuo",
+            "rank": 239,
+            "credit": 2364264425,
+            "team": 0,
+            "id": 19148
+        },
+        {
+            "wus": 66045,
+            "name": "lottab",
+            "rank": 305,
+            "credit": 1836096285,
+            "team": 0,
+            "id": 105707
+        },
+        {
+            "wus": 57184,
+            "name": "Pauliewog83",
+            "rank": 322,
+            "credit": 1769640139,
+            "team": 0,
+            "id": 263916
+        },
+        {
+            "wus": 49022,
+            "name": "jsoule1011",
+            "rank": 344,
+            "credit": 1643735926,
+            "team": 0,
+            "id": 12902
+        },
+        {
+            "wus": 110023,
+            "name": "Peacock",
+            "rank": 363,
+            "credit": 1595306304,
+            "team": 0,
+            "id": 19360
+        },
+        {
+            "wus": 28208,
+            "name": "Eric_in_US",
+            "rank": 365,
+            "credit": 1592809185,
+            "team": 0,
+            "id": 249643
+        },
+        {
+            "wus": 21432,
+            "name": "TheSven",
+            "rank": 381,
+            "credit": 1516914015,
+            "team": 0,
+            "id": 196482
+        },
+        {
+            "wus": 25906,
+            "name": "imacwill",
+            "rank": 410,
+            "credit": 1431576716,
+            "team": 0,
+            "id": 103382
+        },
+        {
+            "wus": 83074,
+            "name": "Mark_Richards_USA",
+            "rank": 422,
+            "credit": 1406860583,
+            "team": 0,
+            "id": 106217
+        },
+        {
+            "wus": 46904,
+            "name": "m14m",
+            "rank": 463,
+            "credit": 1313859361,
+            "team": 0,
+            "id": 15314
+        },
+        {
+            "wus": 29206,
+            "name": "EugeneZenzen",
+            "rank": 501,
+            "credit": 1232076796,
+            "team": 0,
+            "id": 238215
+        },
+        {
+            "wus": 20017,
+            "name": "HangYang",
+            "rank": 515,
+            "credit": 1213497162,
+            "team": 0,
+            "id": 176334
+        },
+        {
+            "wus": 62265,
+            "name": "PS3hep48",
+            "rank": 547,
+            "credit": 1164184901,
+            "team": 0,
+            "id": 20194
+        },
+        {
+            "wus": 21372,
+            "name": "virtuosity250",
+            "rank": 564,
+            "credit": 1140320845,
+            "team": 0,
+            "id": 112883
+        },
+        {
+            "wus": 60247,
+            "name": "davidcoton",
+            "rank": 568,
+            "credit": 1132966655,
+            "team": 0,
+            "id": 49617
+        }
+    ],
+    "rank": 3,
+    "total_teams": 229033,
+    "last": "2020-02-12 11:45:36",
+    "name": "Default (No team specified)",
+    "credit": 205749691878,
+    "team": 0,
+    "path": "team/0"
+}

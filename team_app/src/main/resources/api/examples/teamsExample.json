@@ -1,0 +1,712 @@
+{
+    "description": "Name starts with 'SIN'",
+    "monthly": false,
+    "results": [
+        {
+            "wus": 71199,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=197&type=score",
+            "name": "Singapore",
+            "rank": 777,
+            "credit": 118169121,
+            "team": 197,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=197&type=wus"
+        },
+        {
+            "wus": 11916,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=165188&type=score",
+            "name": "singhpk99",
+            "rank": 4001,
+            "credit": 5309420,
+            "team": 165188,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=165188&type=wus"
+        },
+        {
+            "wus": 1641,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=218777&type=score",
+            "name": "Singularity-2",
+            "rank": 4790,
+            "credit": 3654200,
+            "team": 218777,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=218777&type=wus"
+        },
+        {
+            "wus": 2945,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=223880&type=score",
+            "name": "Sintanet",
+            "rank": 5303,
+            "credit": 2965633,
+            "team": 223880,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=223880&type=wus"
+        },
+        {
+            "wus": 3488,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=145262&type=score",
+            "name": "sinogame.net",
+            "rank": 7187,
+            "credit": 1560587,
+            "team": 145262,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=145262&type=wus"
+        },
+        {
+            "wus": 7469,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=233457&type=score",
+            "name": "SinguLANity",
+            "rank": 8991,
+            "credit": 933625,
+            "team": 233457,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=233457&type=wus"
+        },
+        {
+            "wus": 3119,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=59610&type=score",
+            "name": "Sinisters",
+            "rank": 11022,
+            "credit": 600195,
+            "team": 59610,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=59610&type=wus"
+        },
+        {
+            "wus": 1456,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=206595&type=score",
+            "name": "Singularity6",
+            "rank": 12289,
+            "credit": 464061,
+            "team": 206595,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=206595&type=wus"
+        },
+        {
+            "wus": 129,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=200368&type=score",
+            "name": "SINKO",
+            "rank": 14182,
+            "credit": 330437,
+            "team": 200368,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=200368&type=wus"
+        },
+        {
+            "wus": 1307,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=46936&type=score",
+            "name": "Singers Club",
+            "rank": 17182,
+            "credit": 208600,
+            "team": 46936,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=46936&type=wus"
+        },
+        {
+            "wus": 225,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=50000&type=score",
+            "name": "Sinopsis LLC",
+            "rank": 18510,
+            "credit": 172936,
+            "team": 50000,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=50000&type=wus"
+        },
+        {
+            "wus": 601,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=70294&type=score",
+            "name": "Sinari",
+            "rank": 19072,
+            "credit": 160040,
+            "team": 70294,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=70294&type=wus"
+        },
+        {
+            "wus": 456,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=151925&type=score",
+            "name": "Sinister Swarm",
+            "rank": 19108,
+            "credit": 159080,
+            "team": 151925,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=151925&type=wus"
+        },
+        {
+            "wus": 463,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=111111&type=score",
+            "name": "SIN",
+            "rank": 22414,
+            "credit": 104867,
+            "team": 111111,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=111111&type=wus"
+        },
+        {
+            "wus": 305,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=93715&type=score",
+            "name": "sinclair1",
+            "rank": 23247,
+            "credit": 94936,
+            "team": 93715,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=93715&type=wus"
+        },
+        {
+            "wus": 185,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=96764&type=score",
+            "name": "SinisterTech",
+            "rank": 23570,
+            "credit": 91228,
+            "team": 96764,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=96764&type=wus"
+        },
+        {
+            "wus": 337,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=165658&type=score",
+            "name": "Sin City 2009",
+            "rank": 23588,
+            "credit": 91012,
+            "team": 165658,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=165658&type=wus"
+        },
+        {
+            "wus": 560,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=11951&type=score",
+            "name": "sing",
+            "rank": 25140,
+            "credit": 75915,
+            "team": 11951,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=11951&type=wus"
+        },
+        {
+            "wus": 311,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=59453&type=score",
+            "name": "Single Malt",
+            "rank": 26082,
+            "credit": 68562,
+            "team": 59453,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=59453&type=wus"
+        },
+        {
+            "wus": 69,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=125086&type=score",
+            "name": "sin013",
+            "rank": 34549,
+            "credit": 29642,
+            "team": 125086,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=125086&type=wus"
+        },
+        {
+            "wus": 84,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=81729&type=score",
+            "name": "singh",
+            "rank": 36195,
+            "credit": 25474,
+            "team": 81729,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=81729&type=wus"
+        },
+        {
+            "wus": 147,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=87739&type=score",
+            "name": "Sines",
+            "rank": 36494,
+            "credit": 24776,
+            "team": 87739,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=87739&type=wus"
+        },
+        {
+            "wus": 85,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=97052&type=score",
+            "name": "SinTEK",
+            "rank": 37148,
+            "credit": 23381,
+            "team": 97052,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=97052&type=wus"
+        },
+        {
+            "wus": 97,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=83303&type=score",
+            "name": "Singapore@Folding",
+            "rank": 38124,
+            "credit": 21506,
+            "team": 83303,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=83303&type=wus"
+        },
+        {
+            "wus": 147,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=233073&type=score",
+            "name": "Singley-Phoenix",
+            "rank": 39923,
+            "credit": 18375,
+            "team": 233073,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=233073&type=wus"
+        },
+        {
+            "wus": 58,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=213568&type=score",
+            "name": "Sinisterhand@Home",
+            "rank": 41064,
+            "credit": 16614,
+            "team": 213568,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=213568&type=wus"
+        },
+        {
+            "wus": 64,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=49479&type=score",
+            "name": "Sinsitio.com",
+            "rank": 43824,
+            "credit": 13024,
+            "team": 49479,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=49479&type=wus"
+        },
+        {
+            "wus": 67,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=130136&type=score",
+            "name": "SinapsisSystems",
+            "rank": 43876,
+            "credit": 12957,
+            "team": 130136,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=130136&type=wus"
+        },
+        {
+            "wus": 236,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=32142&type=score",
+            "name": "sinica",
+            "rank": 45091,
+            "credit": 11693,
+            "team": 32142,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=32142&type=wus"
+        },
+        {
+            "wus": 27,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=141369&type=score",
+            "name": "sin eaters",
+            "rank": 46771,
+            "credit": 10089,
+            "team": 141369,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=141369&type=wus"
+        },
+        {
+            "wus": 5,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=149805&type=score",
+            "name": "Sin City Folders",
+            "rank": 47986,
+            "credit": 9120,
+            "team": 149805,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=149805&type=wus"
+        },
+        {
+            "wus": 38,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=73646&type=score",
+            "name": "Sin's Collection of CPU's",
+            "rank": 49135,
+            "credit": 8273,
+            "team": 73646,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=73646&type=wus"
+        },
+        {
+            "wus": 23,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=141924&type=score",
+            "name": "Singh Folding",
+            "rank": 51772,
+            "credit": 6601,
+            "team": 141924,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=141924&type=wus"
+        },
+        {
+            "wus": 23,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=63457&type=score",
+            "name": "Sin & Zablatik",
+            "rank": 52443,
+            "credit": 6238,
+            "team": 63457,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=63457&type=wus"
+        },
+        {
+            "wus": 21,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=61092&type=score",
+            "name": "sInergy",
+            "rank": 52620,
+            "credit": 6128,
+            "team": 61092,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=61092&type=wus"
+        },
+        {
+            "wus": 49,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=11907&type=score",
+            "name": "Singularity",
+            "rank": 54690,
+            "credit": 5146,
+            "team": 11907,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=11907&type=wus"
+        },
+        {
+            "wus": 22,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=90153&type=score",
+            "name": "SingleCoreNoobs",
+            "rank": 57049,
+            "credit": 4233,
+            "team": 90153,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=90153&type=wus"
+        },
+        {
+            "wus": 28,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=204727&type=score",
+            "name": "SinnenGreen & Associates",
+            "rank": 57803,
+            "credit": 3960,
+            "team": 204727,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=204727&type=wus"
+        },
+        {
+            "wus": 21,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=67084&type=score",
+            "name": "sinossi1",
+            "rank": 57910,
+            "credit": 3920,
+            "team": 67084,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=67084&type=wus"
+        },
+        {
+            "wus": 22,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=91807&type=score",
+            "name": "singletrackworld",
+            "rank": 57935,
+            "credit": 3910,
+            "team": 91807,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=91807&type=wus"
+        },
+        {
+            "wus": 27,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=49168&type=score",
+            "name": "Sinopsis",
+            "rank": 59045,
+            "credit": 3565,
+            "team": 49168,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=49168&type=wus"
+        },
+        {
+            "wus": 25,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=128266&type=score",
+            "name": "Singularitians",
+            "rank": 59421,
+            "credit": 3481,
+            "team": 128266,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=128266&type=wus"
+        },
+        {
+            "wus": 12,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=50650&type=score",
+            "name": "Singhs & Kaurs",
+            "rank": 61959,
+            "credit": 2780,
+            "team": 50650,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=50650&type=wus"
+        },
+        {
+            "wus": 6,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=159184&type=score",
+            "name": "SingingBush",
+            "rank": 62655,
+            "credit": 2632,
+            "team": 159184,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=159184&type=wus"
+        },
+        {
+            "wus": 8,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=164086&type=score",
+            "name": "SinTax",
+            "rank": 63039,
+            "credit": 2535,
+            "team": 164086,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=164086&type=wus"
+        },
+        {
+            "wus": 9,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=154325&type=score",
+            "name": "SINGH IS KING",
+            "rank": 63888,
+            "credit": 2361,
+            "team": 154325,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=154325&type=wus"
+        },
+        {
+            "wus": 114,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=1428&type=score",
+            "name": "Sinnlosen Ciws",
+            "rank": 64289,
+            "credit": 2272,
+            "team": 1428,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=1428&type=wus"
+        },
+        {
+            "wus": 7,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=217747&type=score",
+            "name": "SinM�dia@Home",
+            "rank": 66528,
+            "credit": 1886,
+            "team": 217747,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=217747&type=wus"
+        },
+        {
+            "wus": 7,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=173909&type=score",
+            "name": "Sinister_Exercises",
+            "rank": 67422,
+            "credit": 1753,
+            "team": 173909,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=173909&type=wus"
+        },
+        {
+            "wus": 5,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=203711&type=score",
+            "name": "SINNER",
+            "rank": 70955,
+            "credit": 1255,
+            "team": 203711,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=203711&type=wus"
+        },
+        {
+            "wus": 4,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=189621&type=score",
+            "name": "sin@home",
+            "rank": 71685,
+            "credit": 1203,
+            "team": 189621,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=189621&type=wus"
+        },
+        {
+            "wus": 35,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=376&type=score",
+            "name": "Sin Grafix",
+            "rank": 71800,
+            "credit": 1186,
+            "team": 376,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=376&type=wus"
+        },
+        {
+            "wus": 4,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=81397&type=score",
+            "name": "Sinclair",
+            "rank": 72093,
+            "credit": 1148,
+            "team": 81397,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=81397&type=wus"
+        },
+        {
+            "wus": 12,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=95271&type=score",
+            "name": "SINALOA",
+            "rank": 72253,
+            "credit": 1127,
+            "team": 95271,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=95271&type=wus"
+        },
+        {
+            "wus": 4,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=77118&type=score",
+            "name": "Sinergia Computazionale",
+            "rank": 75382,
+            "credit": 837,
+            "team": 77118,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=77118&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=214275&type=score",
+            "name": "Singapore Techies",
+            "rank": 78684,
+            "credit": 600,
+            "team": 214275,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=214275&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=131253&type=score",
+            "name": "Sinkira",
+            "rank": 79407,
+            "credit": 570,
+            "team": 131253,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=131253&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=153707&type=score",
+            "name": "sinskinner",
+            "rank": 79380,
+            "credit": 570,
+            "team": 153707,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=153707&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=73964&type=score",
+            "name": "sint-pieters-leeuw",
+            "rank": 79810,
+            "credit": 538,
+            "team": 73964,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=73964&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=134579&type=score",
+            "name": "Sindrome Folding",
+            "rank": 81742,
+            "credit": 480,
+            "team": 134579,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=134579&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=81666&type=score",
+            "name": "sinedv",
+            "rank": 82398,
+            "credit": 425,
+            "team": 81666,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=81666&type=wus"
+        },
+        {
+            "wus": 30,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=12025&type=score",
+            "name": "Singing Rubber Fish",
+            "rank": 83580,
+            "credit": 363,
+            "team": 12025,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=12025&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=56901&type=score",
+            "name": "Single Threat",
+            "rank": 83826,
+            "credit": 350,
+            "team": 56901,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=56901&type=wus"
+        },
+        {
+            "wus": 4,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=85569&type=score",
+            "name": "sinner's",
+            "rank": 86648,
+            "credit": 251,
+            "team": 85569,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=85569&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=40958&type=score",
+            "name": "Sinister Honkey Klan",
+            "rank": 89408,
+            "credit": 241,
+            "team": 40958,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=40958&type=wus"
+        },
+        {
+            "wus": 3,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=197908&type=score",
+            "name": "SinTheory",
+            "rank": 90384,
+            "credit": 207,
+            "team": 197908,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=197908&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=48351&type=score",
+            "name": "singlespeedforum.de",
+            "rank": 91155,
+            "credit": 166,
+            "team": 48351,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=48351&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=154860&type=score",
+            "name": "sint Willebrord",
+            "rank": 91197,
+            "credit": 165,
+            "team": 154860,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=154860&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=141174&type=score",
+            "name": "SINECURE305",
+            "rank": 92493,
+            "credit": 110,
+            "team": 141174,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=141174&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=156119&type=score",
+            "name": "SinisterStatistics",
+            "rank": 92482,
+            "credit": 110,
+            "team": 156119,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=156119&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=33876&type=score",
+            "name": "Sinware",
+            "rank": 92606,
+            "credit": 107,
+            "team": 33876,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=33876&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=34994&type=score",
+            "name": "SiNister",
+            "rank": 93547,
+            "credit": 56,
+            "team": 34994,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=34994&type=wus"
+        },
+        {
+            "wus": 2,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=2869&type=score",
+            "name": "Singapore Team",
+            "rank": 93657,
+            "credit": 47,
+            "team": 2869,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=2869&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=13373&type=score",
+            "name": "Sin|taX",
+            "rank": 94818,
+            "credit": 6,
+            "team": 13373,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=13373&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=227183&type=score",
+            "name": "SinTeam",
+            "rank": 95497,
+            "credit": 0,
+            "team": 227183,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=227183&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=198908&type=score",
+            "name": "sincere",
+            "rank": 95658,
+            "credit": 0,
+            "team": 198908,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=198908&type=wus"
+        },
+        {
+            "wus": 1,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=145127&type=score",
+            "name": "Sinnerswake",
+            "rank": 95444,
+            "credit": 0,
+            "team": 145127,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=145127&type=wus"
+        },
+        {
+            "wus": 7,
+            "credit_cert": "https://apps.foldingathome.org/awards?team=91201&type=score",
+            "name": "SinfulShadows",
+            "rank": 96811,
+            "credit": 0,
+            "team": 91201,
+            "wus_cert": "https://apps.foldingathome.org/awards?team=91201&type=wus"
+        }
+    ],
+    "month": 2,
+    "year": 2020,
+    "query": "team",
+    "path": "teams"
+}

@@ -1,0 +1,76 @@
+#%RAML 1.0
+title: TEAM API
+
+uses:
+  teamsType: libraries/teams.raml
+  teams-mounthlyType: libraries/teams-mounthly.raml
+  teamType: libraries/team.raml
+  
+types:
+  errorResponse: !include dataType/ERRORresponse.raml
+
+  
+/teams:
+  get:
+    queryParameters:
+       name?:
+         type: string
+       search_type?:
+        type: string
+       passkey?:
+        type: integer
+       team?:
+        type: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: teamsType.Properties
+            example: !include examples/teamsExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json 
+            
+/teams-monthly:
+  get:
+    queryParameters:
+       name?:
+         type: string
+       search_type?:
+        type: string
+       passkey?:
+        type: integer
+       team?:
+        type: integer
+       month?:
+        type: integer
+       year?:
+        type: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: teams-mounthlyType.Properties
+            example: !include examples/teams-mounthlyExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json       
+     
+/team/{teamId}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: teamType.Properties
+            example: !include examples/teamExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json       
+     
