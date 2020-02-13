@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="team_processFlow" doc:id="ffea52ab-311c-41cc-9959-a2881bc8c703" >
+		<db:select doc:name="Select" doc:id="c2c0b31d-8dbe-4514-a6cf-9f5605d2464c" config-ref="Database_Config" maxRows="1000">
+			<db:sql >SELECT  teams.id, teams.name, team_statistics.wu, team_statistics.score, team_statistics.rank,
+team_statistics.team_statistic_date, donors_teams.donors_id as donor_id, donors.name as donor_name,
+donor_statistics.score as donor_score, donor_statistics.wu as donor_wu, donor_statistics.rank as donot_rank
+FROM folding_home_db.teams
+join team_statistics
+on teams.id = team_statistics.teams_id  and teams.id = :team_id and team_statistic_date = &quot;2020-02-10&quot;
+join donors_teams
+on teams.id = donors_teams.teams_id 
+join donors
+on donors.id = donors_teams.donors_id 
+join donor_statistics
+on donors.id = donor_statistics.donors_id and donor_statistics.donor_statistic_date = &quot;2020-02-10&quot;;</db:sql>
+			<db:input-parameters ><![CDATA[#[{team_id: vars.teamId}]]]></db:input-parameters>
+		</db:select>
+		<choice doc:name="Choice" doc:id="13fa97c0-2c3c-4f3c-aef0-fd224e4bd963" >
+			<when expression="#[payload == []]">
+				<ee:transform doc:name="empty response" doc:id="98eda6af-159d-4bbe-b466-6f91295557cd" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{error: "information about team id = " ++ vars.teamID ++ " not found"}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="build response" doc:id="90e6190a-fc22-4c72-b333-db64b46443d1">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{	wus: payload[0].wu,
+	donors: payload map(value, index)->
+		{
+		"wus": value.donor_wu,
+	    "name": value.donor_name,
+	    "rank": value.donot_rank,
+	    "credit": value.donor_score,
+	    "team": value.donor_name,
+	    "id": value.donor_id
+		},
+	rank: payload[0].rank,
+	name: payload[0].name,
+	credit:payload[0].score,
+	team: payload[0].id,
+	path: "team/" ++ payload[0].id
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>

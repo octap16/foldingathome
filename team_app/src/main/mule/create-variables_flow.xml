@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="create_varsFlow" doc:id="fbf6401c-6438-4ad9-8ac0-b3fd32635b21" >
+		<ee:transform doc:name="create queryName" doc:id="3dab7b31-c956-43f5-a616-797c955e7e78" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="queryName" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.queryParams.name]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="create searchType" doc:id="0a844f50-c4dc-49c0-a324-b091d2f4fc8f" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="searchType" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.queryParams.search_type]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="create queryTeam" doc:id="06897169-1943-483c-bc51-032717b34c19" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="queryTeam" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.queryParams.team]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="input_month_varsFlow" doc:id="d1bd1bb4-368e-4747-892d-094ef8f8a992" >
+		<flow-ref doc:name="create_varsFlow" doc:id="ba79665a-63d9-44e0-bc0c-06e131d2a0fc" name="create_varsFlow"/>
+		<ee:transform doc:name="Copy_of_create inputMonth" doc:id="1a30f860-9db2-426c-ba1d-f7afd35bb998" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="inputMonth" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.queryParams.month default now().month]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="Copy_of_create inputYear" doc:id="218d3705-5bbc-4ad0-b1e8-bbf729b8d38a" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="inputYear" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.queryParams.year default now().year]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="generateSearchQueryParamsFlow" doc:id="34a1bd86-25f1-45fb-9222-844261177d9b">
+		<ee:transform doc:name="searchByName" doc:id="3c38465c-e2aa-4675-a585-6985d89c8b2b">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="searchByName"><![CDATA[%dw 2.0
+output aplication/java
+var search_type = vars.searchType default "="
+fun buildQuery() = 
+	if (vars.queryName == null) ""
+	else if (search_type == "like") ("and teams.name " ++ search_type ++" " ++ "'%" ++ vars.queryName ++ "%'")
+	else if (search_type == "prefix") ("and teams.name " ++ "like " ++ "'" ++ vars.queryName ++ "%'")
+	else ("and teams.name " ++ "= " ++ "'" ++ vars.queryName ++ "'")
+---
+buildQuery()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="searchByTeam" doc:id="196d640c-6a70-4ef9-9c2b-458cef993eca">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="searchByTeam"><![CDATA[%dw 2.0
+output aplication/java
+
+fun buildQuery() = 
+	if (vars.queryTeam == null) ""
+	else ("and  teams.id = " ++ vars.queryTeam)
+---
+buildQuery()]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+	<flow name="generateDateQueryParamsFlow" doc:id="456d4bd6-3255-42b0-ba7e-a1179cd55865" >
+		<ee:transform doc:name="searchByMonth" doc:id="7257ed18-1483-4337-87c0-005e71a03ebd" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="searchByPrevMonth" ><![CDATA[%dw 2.0
+output aplication/json
+---
+"and MONTH(team_statistic_date) = " ++ (vars.inputMonth - 1)]]></ee:set-variable>
+				<ee:set-variable variableName="searchByMonth" ><![CDATA[%dw 2.0
+output aplication/json
+---
+"and MONTH(team_statistic_date) = " ++ vars.inputMonth]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="searchByYear" doc:id="ace49ed6-eb44-4462-832e-0bbbdb9fbb27" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="searchByYear" ><![CDATA[%dw 2.0
+output aplication/json
+---
+"and YEAR(team_statistic_date) = " ++ vars.inputYEAR]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+</mule>

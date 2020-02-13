@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="teams-mounth_processFlow" doc:id="cfef26db-f350-4764-9cbd-63bfd99db295" >
+		<flow-ref doc:name="input_month_varsFlow" doc:id="f0831a68-3e92-4e0f-bb90-c9cc032e8e21" name="input_month_varsFlow"/>
+		<flow-ref doc:name="generateSearchQueryParamsFlow" doc:id="739a41c1-0a7d-4c82-93cb-b7cf7870d837" name="generateSearchQueryParamsFlow"/>
+		<flow-ref doc:name="generateDateQueryParamsFlow" doc:id="b590f02e-c36a-4550-a408-e4201ddc61e6" name="generateDateQueryParamsFlow"/>
+		<db:select doc:name="selectDatаForReceiveDate" doc:id="5282c459-0ecd-4bd5-80df-641fd2377aed" config-ref="Database_Config">
+			<db:sql>#[&quot;SELECT  teams.id, teams.name, team_statistics.wu, team_statistics.score, team_statistics.rank, team_statistics.team_statistic_date  FROM folding_home_db.teams
+join team_statistics
+on teams.id = team_statistics.teams_id $(vars.searchByName) $(vars.searchByTeam) $(vars.searchByMonth) $(vars.searchByYear)
+ORDER BY team_statistics.rank
+limit 100&quot;]</db:sql>
+		</db:select>
+		<db:select doc:name="selectDatаForPrevDate" doc:id="31564553-77cc-4ddb-a229-9df5e843459e" config-ref="Database_Config" target="prevData">
+			<db:sql>#[&quot;SELECT  teams.id, team_statistics.wu as prev_wu, team_statistics.score as prev_score, team_statistics.rank as prev_rank FROM folding_home_db.teams
+join team_statistics
+on teams.id = team_statistics.teams_id $(vars.searchByName) $(vars.searchByTeam) $(vars.searchByPrevMonth) $(vars.searchByYear)
+ORDER BY team_statistics.rank
+limit 100&quot;]</db:sql>
+		</db:select>
+		<ee:transform doc:name="joinPayloadAndPrevData" doc:id="768ee300-7d88-42e7-a7c1-8dcd379afcd8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+import * from dw::core::Arrays
+---
+join(payload, vars.prevData, (data) -> data.id, (prevData) -> prevData.id)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="create description" doc:id="228e6997-be81-4b15-8a62-b167b2e17ce3">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="description"><![CDATA[%dw 2.0
+output application/json
+fun searchType() =
+if(vars.searchType == "like") "similar to "
+else if (vars.searchType == "prefix") "start with "
+else "is "
+fun description(searchType) =
+if(payload == []) "No results"
+else if(vars.queryName != null and vars.queryTeam != null) ("Name " ++ searchType ++ vars.queryName ++ " -- " ++ "Team '" ++ vars.queryTeam ++ "'")
+else if(vars.queryName != null) ("Name " ++ searchType ++ vars.queryName)
+else if(vars.queryTeam != null) ("Team '" ++ vars.queryTeam ++ "'")
+else "Top 100"
+---
+description(searchType())]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="build response" doc:id="83140b68-468e-478a-a96c-841faddc6fa1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"description": vars.description,
+   "monthly": false,
+    "results": payload map(value, index) ->{
+    	"wus": (value.l.wu - value.r.prev_wu default 0),
+    	"name": value.l.name, 
+    	"prev_rank": value.r.prev_rank,
+    	"rank": value.l.rank,
+    	"credit": (value.l.score - value.r.prev_score default 0),
+    	"team": value.l.id 
+    },
+    "month": vars.inputMonth,
+    "year":  vars.inputYear,
+    "query": "team",
+    "path": "teams-monthly"
+ }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
