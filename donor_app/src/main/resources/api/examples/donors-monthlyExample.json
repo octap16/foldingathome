@@ -1,0 +1,28 @@
+{
+    "description": "Team '10'",
+    "monthly": true,
+    "results": [
+        {
+            "wus": 898,
+            "name": "Biffa_FLDC_1JpmxVwXuSCJGb1kL1xgmsPZAL6N2dERe7",
+            "prev_rank": 155,
+            "rank": 121,
+            "credit": 92471595,
+            "team": 10,
+            "id": 258712
+        },
+        {
+            "wus": 178,
+            "name": "Jumper118",
+            "prev_rank": 1243,
+            "rank": 843,
+            "credit": 14659086,
+            "team": 10,
+            "id": 176418
+        }
+    ],
+    "month": 6,
+    "year": 2018,
+    "query": "donor",
+    "path": "donors-monthly"
+}

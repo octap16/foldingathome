@@ -1,0 +1,23 @@
+{
+    "wus": 1269208,
+    "rank": 2277,
+    "total_users": 1931815,
+   	"path": "donor/1",
+    "id": 1,
+    "last": "2019-07-31 18:15:06",
+    "name": "",
+    "teams": [
+        {
+            "wus": 1256495,
+            "last": "2019-06-29 06:49:52",
+            "uid": 1,
+            "active_50": 0,
+            "active_7": 0,
+            "credit": 254524002,
+            "team": 0,
+            "name": "Default (No team specified)"
+        }
+    ],
+    "active_7": 0,
+    "credit": 269521136
+}

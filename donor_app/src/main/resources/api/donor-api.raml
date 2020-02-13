@@ -1,0 +1,76 @@
+#%RAML 1.0
+title: TEAM API
+
+uses:
+  donorsType: libraries/donors.raml
+  donors-monthlyType: libraries/donors-monthly.raml
+  donorType: libraries/donor.raml
+  
+types:
+  errorResponse: !include dataType/ERRORresponse.raml
+
+  
+/donors:
+  get:
+    queryParameters:
+       name?:
+         type: string
+       search_type?:
+        type: string
+       passkey?:
+        type: integer
+       team?:
+        type: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: donorsType.Properties
+            example: !include examples/donorsExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json 
+            
+/donors-monthly:
+  get:
+    queryParameters:
+       name?:
+         type: string
+       search_type?:
+        type: string
+       passkey?:
+        type: integer
+       team?:
+        type: integer
+       month?:
+        type: integer
+       year?:
+        type: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: donors-monthlyType.Properties
+            example: !include examples/donors-monthlyExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json       
+     
+/donor/{donorId}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: donorType.Properties
+            example: !include examples/donorExample.json
+      500:
+        body:
+          application/json:
+            type: errorResponse
+            example: !include examples/ERRORresponse.json       
+     

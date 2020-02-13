@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+
+types:
+  Properties:
+    type: object
+    properties:
+      description: string
+      monthly: boolean
+      results: Result[]
+      month: integer
+      year: integer
+      query: string
+      path: string
+  
+  Result:
+    type: object
+    properties:
+      wus: integer
+      name: string
+      prev_rank: integer
+      rank: integer
+      credit: integer
+      team: integer
+      id: integer

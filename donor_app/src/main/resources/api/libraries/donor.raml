@@ -1,0 +1,27 @@
+#%RAML 1.0 Library
+
+types:
+  Properties:
+    type: object
+    properties:
+      wus: integer
+      rank: integer
+      total_users: integer
+      path: string
+      id: integer
+      last: string
+      name: string
+      teams: Team[]
+      active_7: integer
+      credit: integer
+  
+  Team:
+    type: object
+    properties:
+      wus: integer
+      last: string
+      uid: integer
+      active_50: integer
+      active_7: integer
+      team: integer
+      name: string

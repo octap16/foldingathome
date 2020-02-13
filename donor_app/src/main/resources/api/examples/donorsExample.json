@@ -1,0 +1,82 @@
+{
+    "description": "Team '11'",
+    "monthly": false,
+    "results": [
+        {
+            "wus": 3889,
+            "name": "ryantully",
+            "rank": 13257,
+            "credit": 24750501,
+            "team": 11,
+            "id": 280418
+        },
+        {
+            "wus": 804,
+            "name": "Yavanius",
+            "rank": 19451,
+            "credit": 13024601,
+            "team": 11,
+            "id": 350480
+        },
+        {
+            "wus": 102,
+            "name": "Biffa_FLDC_1JpmxVwXuSCJGb1kL1xgmsPZAL6N2dERe7",
+            "rank": 208,
+            "credit": 11433284,
+            "team": 11,
+            "id": 258712
+        },
+        {
+            "wus": 395,
+            "name": "Runestar007",
+            "rank": 60561,
+            "credit": 1560443,
+            "team": 11,
+            "id": 350264
+        },
+        {
+            "wus": 71,
+            "name": "Kirkova",
+            "rank": 67128,
+            "credit": 1255712,
+            "team": 11,
+            "id": 239099
+        },
+        {
+            "wus": 558,
+           "name": "ArkAngelAres",
+            "rank": 78555,
+            "credit": 882554,
+            "team": 11,
+           	"id": 164909
+        },
+        {
+            "wus": 196,
+            "name": "khatty9877",
+            "rank": 84056,
+            "credit": 753479,
+            "team": 11,
+            "id": 214392
+        },
+        {
+            "wus": 2602,
+            "name": "suitti",
+            "rank": 94326,
+            "credit": 575886,
+            "team": 11,
+            "id": 24253
+        },
+        {
+            "wus": 134,
+            "name": "Townhill",
+            "rank": 22805,
+            "credit": 507644,
+            "team": 11,
+            "id": 65714
+        }
+    ],
+    "month": 2,
+    "year": 2020,
+    "query": "donor",
+    "path": "donors"
+}
