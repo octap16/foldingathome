@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="donors-month_processFlow" doc:id="03e07266-f8fb-4d19-a9e9-7acd932c0beb" >
+		<flow-ref doc:name="input_month_varsFlow" doc:id="f99483fe-8c9c-4994-9573-46a646f583f0" name="input_month_varsFlow"/>
+		<flow-ref doc:name="generateSearchQueryParamsFlow" doc:id="cff5d027-908a-4451-9bf2-1f9de5dfdcab" name="generateSearchQueryParamsFlow"/>
+		<flow-ref doc:name="generateDateQueryParamsFlow" doc:id="b2703327-86e1-405d-a792-fe52e722b8fc" name="generateDateQueryParamsFlow"/>
+		<db:select doc:name="selectDatаForReceiveDate" doc:id="81d183ca-9758-4ae7-a2cf-479817022ac6" config-ref="Database_Config" maxRows="100">
+			<db:sql>#[&quot; SELECT donors.id as donor_id, donors.name as name, donor_statistics.wu as donor_wu,
+donor_statistics.score as donor_score, donor_statistics.rank as donor_rank, donor_statistics.donor_statistic_date as donor_date, donors_teams.teams_id as team_id
+FROM folding_home_db.donors
+join donor_statistics
+on donors.id = donor_statistics.donors_id 
+join donors_teams
+on donors.id = donors_teams.donors_id $(vars.searchByName) $(vars.searchByTeam) $(vars.searchByMonth) $(vars.searchByYear)
+&quot;]</db:sql>
+		</db:select>
+		<db:select doc:name="selectDatаForPrevDate" doc:id="c1e7e614-c5f8-45ea-9fbc-89e67a24ab56" config-ref="Database_Config" maxRows="100" target="prevData">
+			<db:sql >#[&quot; SELECT donors.id as donor_id, donor_statistics.wu as prev_wu,
+donor_statistics.score as donor_score, donor_statistics.rank as prev_rank
+FROM folding_home_db.donors
+join donor_statistics
+on donors.id = donor_statistics.donors_id 
+join donors_teams
+on donors.id = donors_teams.donors_id $(vars.searchByName) $(vars.searchByTeam) $(vars.searchByPrevMonth) $(vars.searchByYear)
+&quot;]</db:sql>
+		</db:select>
+		<ee:transform doc:name="joinPayloadAndPrevData" doc:id="544a8c35-f10e-4254-bccc-585a8036e1b5">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+import * from dw::core::Arrays
+---
+join(payload, vars.prevData, (data) -> data.id, (prevData) -> prevData.id)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="create description" doc:id="e15bb908-3f4e-42e5-a601-041a6a37b819">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="description"><![CDATA[%dw 2.0
+output application/json
+fun searchType() =
+if(vars.searchType == "like") "similar to "
+else if (vars.searchType == "prefix") "start with "
+else "is "
+fun description(searchType) =
+if(payload == []) "No results"
+else if(vars.queryName != null and vars.queryTeam != null) ("Name " ++ searchType ++ vars.queryName ++ " -- " ++ "Team '" ++ vars.queryTeam ++ "'")
+else if(vars.queryName != null) ("Name " ++ searchType ++ vars.queryName)
+else if(vars.queryTeam != null) ("Team '" ++ vars.queryTeam ++ "'")
+else "Top 100"
+---
+description(searchType())]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="build response" doc:id="dc358c60-88a4-4c3f-b237-37b9861db726" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  description: vars.description,
+  monthly: true,
+  results: payload map(value, index) ->
+    {
+      wus: (value.l.donor_wu - value.r.prev_wu default 0),
+      name: value.l.name,
+      prev_rank: value.r.prev_rank,
+      rank: value.l.donor_rank,
+      credit: (value.l.score - value.r.prev_score default 0),
+      team: value.l.team_id,
+      id:  value.l.donor_id
+    },
+  "month": vars.inputMonth,
+  "year":  vars.inputYear,
+  query: "donor",
+  path: "donors-monthly"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="83459a54-430d-4151-844b-b3b67de2db98" >
+				<ee:transform doc:name="not found response" doc:id="582b45aa-ec38-461a-866f-67cb6c88bf2d">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "description": "No results",
+    "monthly": true,
+    "results": [],
+    "month": vars.inputMonth,
+    "year":  vars.inputYear,
+    "query": "donor",
+    "path": "donors-monthly"
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+</mule>
