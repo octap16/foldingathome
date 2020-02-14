@@ -58,7 +58,7 @@ output application/json
 ---
 {
 "description": vars.description,
-   "monthly": false,
+   "monthly": true,
     "results": payload map(value, index) ->{
     	"wus": (value.l.wu - value.r.prev_wu default 0),
     	"name": value.l.name, 
@@ -74,5 +74,25 @@ output application/json
  }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d5d6452c-5da8-4ceb-aaaf-3301bb966a50" >
+				<ee:transform doc:name="not found response" doc:id="58ef3f09-0f06-4521-b75f-746188e0f8a9" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "description": "No results",
+    "monthly": true,
+    "results": [],
+    "month": vars.inputMonth,
+    "year":  vars.inputYear,
+    "query": "donor",
+    "path": "donors-monthly"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-continue>
+		</error-handler>
 	</flow>
 </mule>
