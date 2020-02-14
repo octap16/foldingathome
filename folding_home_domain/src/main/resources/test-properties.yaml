@@ -1,8 +1,10 @@
 http:
   port: "8080"
   host: "localhost"
-  team_pull_path: "/teams"
-  donor_pull_path: "/donors"
+  team_pull_path: "/pull_teams"
+  donor_pull_path: "/pull_donors"
+  teams: "/teams"
+  donors: "/donors"
 db:
   host: "localhost"
   port: "3306"
